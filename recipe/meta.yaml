@@ -6,21 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 48b3f5213ee913b931df40e4e9325b58b9c9a741f1052a7da1b247ed991f5150
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - pip
     - pdm-pep517 <1.0.5
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - copier >=6
 
 test:
@@ -28,6 +28,7 @@ test:
     - copier_templates_extensions
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
 
